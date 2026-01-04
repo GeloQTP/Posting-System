@@ -2,10 +2,10 @@
 
 class inputSanitizer
 {
-    public function sanitizeUsername($username)
+    public function sanitizeText($text)
     {
-        $username = filter_var($username, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        return ($username);
+        $text = filter_var($text, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        return ($text);
     }
 
     function hashPassword($passcode)

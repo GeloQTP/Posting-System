@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") { // most reliable way when checking 
 
     $isValid = new inputSanitizer();
 
-    $username = $isValid->sanitizeUsername($_POST["username"]); // FILTERING INPUTS TO PREVENT CROSS SITE SCRIPTS
+    $username = $isValid->sanitizeText($_POST["username"]); // FILTERING INPUTS TO PREVENT CROSS SITE SCRIPTS
     $passcode = $_POST["password"] ?? '';
 
     if (!empty($username) && !empty($passcode)) { // INPUT VALIDATION
