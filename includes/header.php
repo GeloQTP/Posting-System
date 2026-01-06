@@ -34,12 +34,30 @@ if (!isset($_SESSION["username"])) {
         background-color: #66B3BA;
     }
 
-    .notification {
+    .notification,
+    .messages,
+    .settings {
         position: relative;
         cursor: pointer;
     }
 
     #notificationList {
+        display: none;
+        position: absolute;
+        top: 35px;
+        right: 0px;
+        background-color: white;
+        list-style: none;
+        /*remove the bullet point per list*/
+        padding: 1em 1em;
+        margin: 0;
+        width: 14em;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+    }
+
+    #messagesList {
         display: none;
         position: absolute;
         top: 35px;
@@ -69,9 +87,51 @@ if (!isset($_SESSION["username"])) {
         cursor: pointer;
         color: white;
     }
+
+    #sidebar {
+        display: none;
+        position: fixed;
+        height: 100vh;
+        background-color: lightblue;
+        padding: 1em 3em;
+        right: 0;
+        z-index: 1000;
+    }
+
+    #close_sidebar_icon {
+        display: flex;
+        justify-content: flex-end;
+        cursor: pointer;
+        margin-bottom: 1em;
+    }
+
+    .side_bar_list {
+        list-style: none;
+    }
+
+    .side_bar_list li {
+        margin-bottom: 1em;
+        height: auto;
+        cursor: pointer;
+    }
 </style>
 
 <body>
+
+    <div id="sidebar">
+
+        <div id="close_sidebar_icon" onclick="closeModal()">X</div>
+
+        <ul class="side_bar_list">
+            <li>Profile</li>
+            <li>Switch Account</li>
+            <li>Preferences</li>
+            <li>Settings</li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
+
+    </div>
+
     <header>
         <nav style="display: flex; align-items: center; justify-content: space-between;">
 
@@ -79,7 +139,7 @@ if (!isset($_SESSION["username"])) {
 
             <ul style="display: flex; list-style-type: none; gap: 20px; align-items: center;">
 
-                <li class="notification">
+                <li class="notification"> <!--notifications icon-->
 
                     <i class="fa fa-bell" style="font-size:25px" onclick="toggleNotifications()"></i>
 
@@ -91,12 +151,21 @@ if (!isset($_SESSION["username"])) {
 
                 </li>
 
-                <li class="messages"><i class="fa fa-envelope" style="font-size:25px"></i></li>
+                <li class="messages">
+
+                    <i class="fa fa-envelope" style="font-size:25px" onclick="toggleMessageList()"> </i> <!--messages icon-->
+
+                    <ul id="messagesList">
+                        <li>Jane Doe Messaged You.</li>
+                        <li>John Doe sent you a message.</li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+
+                </li>
 
                 <li class="settings">
-
-                    <i class="fa fa-gear" style="font-size:30px"></i>
-
+                    <i class="fa fa-gear" style="font-size:30px" onclick="showSidebar()"></i>
                 </li>
                 <li style="font-size: 30px;"><i class="fa fa-circle"></i></li>
                 <form action="logout.php" method="post">
@@ -106,17 +175,39 @@ if (!isset($_SESSION["username"])) {
 
         </nav>
     </header>
+
 </body>
 
 <script>
-    function toggleNotifications() {
-        const list = document.getElementById("notificationList");
-        list.style.display = list.style.display === "block" ? "none" : "block";
+    function toggleNotifications() { // notification visibility toggle function
+        const noticationList = document.getElementById("notificationList");
+        noticationList.style.display = noticationList.style.display === "block" ? "none" : "block";
     }
 
-    // Optional: close when clicking outside
+    function toggleMessageList() { // message list visibility toggle function
+        const messagesList = document.getElementById("messagesList");
+        messagesList.style.display = messagesList.style.display === "block" ? "none" : "block";
+    }
+
+    function showSidebar() { // show the sidebar
+        const sidebar = document.getElementById("sidebar");
+        sidebar.style.display = sidebar.style.display === "block" ? "none" : "block";
+    }
+
+    function closeModal() { // close the modal
+        const sidebar = document.getElementById("sidebar");
+        sidebar.style.display = "none";
+    }
+
+    //close modals when clicking outside of it
     document.addEventListener("click", function(event) {
         const notification = document.querySelector(".notification");
+        const messages = document.querySelector(".messages");
+
+        if (!messages.contains(event.target)) {
+            document.getElementById("messagesList").style.display = "none";
+        }
+
         if (!notification.contains(event.target)) {
             document.getElementById("notificationList").style.display = "none";
         }
