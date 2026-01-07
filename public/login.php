@@ -11,6 +11,8 @@ require("../classes/inputSanitizer.php");
 //     exit();
 // }
 
+$error = '';
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") { // most reliable way when checking for a submitted form or request method
 
     $isValid = new inputSanitizer();
@@ -50,10 +52,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") { // most reliable way when checking 
                     exit();
                 }
             } else {
-                echo "Invalid Username or Password";
+                $error = "Invalid Username or Password";
             }
         } else {
-            echo "Invalid Username or Password";
+            $error = "Invalid Username or Password";
         }
 
         $statement->close();
@@ -94,6 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") { // most reliable way when checking 
                     </div>
 
                 </div>
+                <p style="color: red; font-size:small;"><?php echo $error ?? ''; ?></p>
                 <a href="registration.php">Don't have an account? Register here.</a>
                 <input type="submit" value="LOG IN" name="submit" id="login_btn"> <br>
             </form>

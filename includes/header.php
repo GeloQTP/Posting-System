@@ -98,11 +98,15 @@ if (!isset($_SESSION["username"])) {
         z-index: 1000;
     }
 
-    #close_sidebar_icon {
+    .close_sidebar_icon_container {
         display: flex;
         justify-content: flex-end;
-        cursor: pointer;
+        height: 1.5em;
         margin-bottom: 1em;
+    }
+
+    #close_sidebar_icon {
+        cursor: pointer;
     }
 
     .side_bar_list {
@@ -120,7 +124,9 @@ if (!isset($_SESSION["username"])) {
 
     <div id="sidebar">
 
-        <div id="close_sidebar_icon" onclick="closeModal()">X</div>
+        <div class="close_sidebar_icon_container">
+            <div id="close_sidebar_icon" onclick="closeModal()">X</div>
+        </div>
 
         <ul class="side_bar_list">
             <li>Profile</li>
