@@ -94,7 +94,7 @@ if (!isset($_SESSION["username"]) || $_SESSION["userType"] !== "admin") {
     }
 
     #sidebar {
-        /* display: none; */
+        display: none;
         position: fixed;
         height: 100vh;
         background-color: lightblue;

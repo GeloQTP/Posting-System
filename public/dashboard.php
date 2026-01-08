@@ -26,13 +26,18 @@ try {
 </head>
 
 <body>
-
-    <div>
-
-    </div>
+    <dialog id="comment_dialog"> <!--comment dialog box-->
+        <form action="comment.php" method="post">
+            <input type="hidden" name="post_id" id="post_id" value=""> <!--hidden input to store post ID, look up in the script below-->
+            <label for="comment_input">Enter your comment:</label><br>
+            <textarea id="comment_input" name="comment_input"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+        <button onclick=" this.parentElement.close()">Close</button>
+    </dialog>
 
     <header>
-        <?php require('../includes/header.php'); ?> <!--newer and stricter version of include("file_name");-->
+        <?php require('../includes/header.php'); ?> <!--newer and stricter version of include(" file_name");-->
     </header>
 
     <main>
@@ -43,9 +48,15 @@ try {
                     <span class="post-date"><?= $row['post_date'] ?></span> <!--post date-->
                     <img src="<?= htmlspecialchars($row['filePath']) ?>" alt="<?= htmlspecialchars($row['fileName']) ?>" id="post_images"> <!--image display-->
                     <br>
-                    <div class="caption"><!--caption section-->
+                    <div class=" caption"><!--caption section-->
                         <?= $row['caption']; ?>
                     </div>
+
+                    <div class="like_and_comment_container"> <!--like and comment section-->
+                        <button class="like_button">Like</button>
+                        <button class="comment_button" onclick="openCommentDialog(<?= $row['post_ID'] ?>)">Comment</button>
+                    </div>
+
                 </div>
             </div>
         <?php } ?>
@@ -57,6 +68,33 @@ try {
     </footer>
 </body>
 
-<script src="script.js"></script>
+<script>
+    const commentDialog = document.getElementById('comment_dialog'); // Get the comment dialog element
+
+    const commentButtons = document.querySelectorAll('.comment_button'); // Get all comment buttons
+    const likeButtons = document.querySelectorAll('.like_button'); // Get all like buttons
+
+    const postID = document.getElementById('post_id'); // Hidden input to store post ID
+
+
+    function openCommentDialog(id) { // Function to open comment dialog with post ID
+        postID.value = id;
+        commentDialog.showModal();
+    }
+
+
+
+    likeButtons.forEach(button => { // Add click event listener to each like button
+        button.addEventListener('click', function() {
+            alert('You liked this post!');
+        });
+    });
+
+    commentButtons.forEach(button => { // Add click event listener to each comment button
+        button.addEventListener('click', () => {
+            commentDialog.showModal();
+        });
+    });
+</script>
 
 </html>

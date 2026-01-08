@@ -19,8 +19,6 @@ main {
 }
 
 .post_card {
-    display: flex;
-    flex-direction: column;
     width: 50vw;
     padding: 1em 1em 1.5em;
     border-radius: 10px;
@@ -29,11 +27,54 @@ main {
 }
 
 .post-date {
-    margin: 0em 0em 0em auto;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 0.8em;
+    margin: 0em 0em 0.5em 0em;
+    color: gray;
 }
 
 #post_images {
     /*size of the images displayed on the user's page*/
     width: 100%;
     border-radius: 10px;
+    display: block;
+}
+
+.like_and_comment_container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5em;
+    font-size: 0.9em;
+    color: #333;
+}
+
+.like_button,
+.comment_button {
+    background: none;
+    border: none;
+    color: #007BFF;
+    cursor: pointer;
+    font-size: 1em;
+    padding: 0;
+    margin-left: 1em;
+}
+
+#comment_dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    border-radius: 10px;
+    padding: 1em 2em;
+}
+
+#comment_input {
+    width: 100%;
+    height: 100px;
+    padding: 0.5em;
+    margin: 0.5em 0em 1em 0em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }

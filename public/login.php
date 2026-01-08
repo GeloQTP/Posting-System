@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") { // most reliable way when checking 
         $statement = $conn->prepare("SELECT * FROM users WHERE username = ?"); // PREPARED SQL STATEMENT TO AVOID SQL INJECTION.
 
         if (!$statement) {
-            die("Database error: " . $conn->error); // CHECK IF THE PREPARATION WAS SUCCESSFUL and if not, display the error.
+            die("login.php"); // CHECK IF THE PREPARATION WAS SUCCESSFUL and if not, display the error.
         }
 
         $statement->bind_param("s", $username); // "s" = string, "$sername" = our input
@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") { // most reliable way when checking 
 
         $result = $statement->get_result(); // you can get the result of your sql queries.
 
-        if ($result->num_rows > 0) {
+        if ($result->num_rows > 0) { // checks if the result returned any rows.
             $row = $result->fetch_assoc();
             $hashedPasscode = $row["passcode"];
 
@@ -48,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") { // most reliable way when checking 
                 } else {
                     $_SESSION["username"] = $row["username"];
                     $_SESSION["userType"] = $row["userType"];
+                    $_SESSION["userID"] = $row["userID"];
                     header("Location: dashboard.php");
                     exit();
                 }
@@ -60,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") { // most reliable way when checking 
 
         $statement->close();
     } else {
-        echo "Please fill in all fields.";
+        $error = "Please Fill in all the Fields";
     }
 }
 
