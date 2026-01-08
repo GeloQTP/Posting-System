@@ -27,25 +27,47 @@ try {
 
 <body>
 
-    <div>
+    <dialog id="comment_dialog"> <!--comment dialog box-->
 
-    </div>
+        <img src="" alt="" id="image_preview">
+
+        <form action="comment.php" method="post">
+            <input type="hidden" name="post_id" id="post_id" value=""> <!--hidden input to store post ID, look up in the script below-->
+            <label for="comment_input">Enter your comment:</label><br>
+            <textarea id="comment_input" name="comment_input"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+
+        <button onclick=" this.parentElement.close()">Close</button> <!--close this element's parent element-->
+
+    </dialog>
 
     <header>
-        <?php require('../includes/header.php'); ?> <!--newer and stricter version of include("file_name");-->
+        <?php require('../includes/header.php'); ?> <!--newer and stricter version of include(" file_name");-->
     </header>
 
     <main>
+
         <?php while ($row = $result->fetch_assoc()) {
+
+            $postID = (int) $row['post_ID'];
+            $filePath = (string) $row['filePath'];
+
         ?>
             <div class="post_container"><!--container that makes the post card be place on the center-->
                 <div class="post_card"><!--the post card-->
                     <span class="post-date"><?= $row['post_date'] ?></span> <!--post date-->
                     <img src="<?= htmlspecialchars($row['filePath']) ?>" alt="<?= htmlspecialchars($row['fileName']) ?>" id="post_images"> <!--image display-->
                     <br>
-                    <div class="caption"><!--caption section-->
+                    <div class=" caption"><!--caption section-->
                         <?= $row['caption']; ?>
                     </div>
+
+                    <div class="like_and_comment_container"> <!--like and comment section-->
+                        <button class="like_button">Like</button>
+                        <button class="comment_button" onclick="openCommentDialog(<?= (int)$postID ?>, '<?= htmlspecialchars($filePath, ENT_QUOTES, 'UTF-8') ?>')">Comment</button>
+                    </div>
+
                 </div>
             </div>
         <?php } ?>
@@ -57,6 +79,31 @@ try {
     </footer>
 </body>
 
-<script src="script.js"></script>
+<script>
+    const commentDialog = document.getElementById('comment_dialog'); // Get the comment dialog element
+
+    const commentButtons = document.querySelectorAll('.comment_button'); // Get all comment buttons
+    const likeButtons = document.querySelectorAll('.like_button'); // Get all like buttons
+
+    const postID = document.getElementById('post_id'); // Hidden input to store post ID
+
+    function openCommentDialog(id, filePath) { // Function to open comment dialog with post ID nad file path.
+        postID.value = id;
+        document.getElementById("image_preview").src = filePath;
+        commentDialog.showModal();
+    }
+
+    likeButtons.forEach(button => { // Add click event listener to each like button
+        button.addEventListener('click', function() {
+            alert('You liked this post!');
+        });
+    });
+
+    commentButtons.forEach(button => { // Add click event listener to each comment button
+        button.addEventListener('click', () => {
+            commentDialog.showModal();
+        });
+    });
+</script>
 
 </html>

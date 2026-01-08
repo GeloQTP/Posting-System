@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $isValid = new inputSanitizer();
 
-    $username = $isValid->sanitizeUsername($_POST["username"]) ?? '';
+    $username = $isValid->sanitizeText($_POST["username"]) ?? '';
     $password = $_POST["password"] ?? '';
 
     if (empty($username) || empty($password)) { // checks if out input fields are empty.

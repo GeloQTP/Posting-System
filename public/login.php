@@ -11,6 +11,8 @@ require("../classes/inputSanitizer.php");
 //     exit();
 // }
 
+$error = '';
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") { // most reliable way when checking for a submitted form or request method
 
     $isValid = new inputSanitizer();
@@ -23,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") { // most reliable way when checking 
         $statement = $conn->prepare("SELECT * FROM users WHERE username = ?"); // PREPARED SQL STATEMENT TO AVOID SQL INJECTION.
 
         if (!$statement) {
-            die("Database error: " . $conn->error); // CHECK IF THE PREPARATION WAS SUCCESSFUL and if not, display the error.
+            die("login.php"); // CHECK IF THE PREPARATION WAS SUCCESSFUL and if not, display the error.
         }
 
         $statement->bind_param("s", $username); // "s" = string, "$sername" = our input
@@ -31,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") { // most reliable way when checking 
 
         $result = $statement->get_result(); // you can get the result of your sql queries.
 
-        if ($result->num_rows > 0) {
+        if ($result->num_rows > 0) { // checks if the result returned any rows.
             $row = $result->fetch_assoc();
             $hashedPasscode = $row["passcode"];
 
@@ -46,19 +48,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") { // most reliable way when checking 
                 } else {
                     $_SESSION["username"] = $row["username"];
                     $_SESSION["userType"] = $row["userType"];
+                    $_SESSION["userID"] = $row["userID"];
                     header("Location: dashboard.php");
                     exit();
                 }
             } else {
-                echo "Invalid Username or Password";
+                $error = "Invalid Username or Password";
             }
         } else {
-            echo "Invalid Username or Password";
+            $error = "Invalid Username or Password";
         }
 
         $statement->close();
     } else {
-        echo "Please fill in all fields.";
+        $error = "Please Fill in all the Fields";
     }
 }
 
@@ -94,6 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") { // most reliable way when checking 
                     </div>
 
                 </div>
+                <p style="color: red; font-size:small;"><?php echo $error ?? ''; ?></p>
                 <a href="registration.php">Don't have an account? Register here.</a>
                 <input type="submit" value="LOG IN" name="submit" id="login_btn"> <br>
             </form>
