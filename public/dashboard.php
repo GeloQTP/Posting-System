@@ -29,14 +29,26 @@ try {
 
     <dialog id="comment_dialog"> <!--comment dialog box-->
 
-        <img src="" alt="" id="image_preview">
+        <div style="display: flex; gap:10px "> <!--flex container to hold image preview and comment form-->
 
-        <form action="comment.php" method="post">
-            <input type="hidden" name="post_id" id="post_id" value=""> <!--hidden input to store post ID, look up in the script below-->
-            <label for="comment_input">Enter your comment:</label><br>
-            <textarea id="comment_input" name="comment_input"></textarea>
-            <button type="submit">Submit</button>
-        </form>
+            <div> <!--image preview and comment form container-->
+                <img src="" alt="" id="image_preview">
+
+                <form action="comment.php" method="post">
+                    <input type="hidden" name="post_id" id="post_id" value=""> <!--hidden input to store post ID, look up in the script below-->
+                    <label for="comment_input">Enter your comment:</label><br>
+                    <textarea id="comment_input" name="comment_input"></textarea>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+
+            <div> <!--comments display container-->
+                <div id="comments_display">
+                    <!-- Comments will be loaded here -->
+                </div>
+            </div>
+
+        </div>
 
         <button onclick=" this.parentElement.close()">Close</button> <!--close this element's parent element-->
 
