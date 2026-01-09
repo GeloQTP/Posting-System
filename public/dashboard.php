@@ -77,12 +77,11 @@ try {
 </body>
 
 <script>
-    const commentDialog = document.getElementById('comment_dialog'); // Get the comment dialog element
+    const commentDialog = document.getElementById('comment_dialog'); // Get the comment dialog element.
 
-    const commentButtons = document.querySelectorAll('.comment_button'); // Get all comment buttons
-    const likeButtons = document.querySelectorAll('.like_button'); // Get all like buttons
+    const likeButtons = document.querySelectorAll('.like_button'); // Get all like buttons.
 
-    const postID = document.getElementById('post_id'); // Hidden input to store post ID
+    const postID = document.getElementById('post_id'); // Hidden input to store post ID.
 
     const openCommentDialog = (id, filePath) => { // Function to open comment dialog with post ID nad file path.
         postID.value = id;
@@ -99,12 +98,6 @@ try {
     likeButtons.forEach(button => { // Add click event listener to each like button
         button.addEventListener('click', () => {
             alert('You liked this post!!');
-        });
-    });
-
-    commentButtons.forEach(button => { // Add click event listener to each comment button
-        button.addEventListener('click', () => {
-            commentDialog.showModal();
         });
     });
 </script>
