@@ -49,10 +49,8 @@ try {
     <main>
 
         <?php while ($row = $result->fetch_assoc()) {
-
             $postID = (int) $row['post_ID'];
             $filePath = (string) $row['filePath'];
-
         ?>
             <div class="post_container"><!--container that makes the post card be place on the center-->
                 <div class="post_card"><!--the post card-->
@@ -67,7 +65,6 @@ try {
                         <button class="like_button">Like</button>
                         <button class="comment_button" onclick="openCommentDialog(<?= (int)$postID ?>, '<?= htmlspecialchars($filePath, ENT_QUOTES, 'UTF-8') ?>')">Comment</button>
                     </div>
-
                 </div>
             </div>
         <?php } ?>
@@ -87,15 +84,21 @@ try {
 
     const postID = document.getElementById('post_id'); // Hidden input to store post ID
 
-    function openCommentDialog(id, filePath) { // Function to open comment dialog with post ID nad file path.
+    const openCommentDialog = (id, filePath) => { // Function to open comment dialog with post ID nad file path.
         postID.value = id;
         document.getElementById("image_preview").src = filePath;
         commentDialog.showModal();
-    }
+    };
+
+    // function openCommentDialog(id, filePath) { // Function to open comment dialog with post ID nad file path.
+    //     postID.value = id;
+    //     document.getElementById("image_preview").src = filePath;
+    //     commentDialog.showModal();
+    // }
 
     likeButtons.forEach(button => { // Add click event listener to each like button
-        button.addEventListener('click', function() {
-            alert('You liked this post!');
+        button.addEventListener('click', () => {
+            alert('You liked this post!!');
         });
     });
 
