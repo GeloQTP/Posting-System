@@ -37,7 +37,7 @@ try {
 
                 <form id="comment_form"> <!--no action or method needed since it's handled by JavaScript -->
                     <input type="hidden" name="post_id" id="post_id" value=""> <!--hidden input to store post ID, look up in the script below-->
-                    <label for="comment_input">Enter yourcomment:</label><br>
+                    <label for="comment_input">Enter your Comment:</label><br>
                     <textarea id="comment_input" name="comment_input"></textarea>
                     <div class="submit_btn_container">
                         <input type="submit" id="submit_btn"></input>
@@ -188,7 +188,7 @@ try {
                 const text = escapeHtml(c.comment);
                 return `<div class= "comment">
                             <div class="comment_meta">
-                                <strong>${who}</strong> <em id="comment_date">${when}</em>
+                                <strong id="comment_user">${who} </strong> <em id="comment_date">${when}</em>
                             </div>
                             <div>${text}</div>
                         </div>`;
